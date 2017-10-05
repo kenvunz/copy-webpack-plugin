@@ -5,7 +5,7 @@ import path from 'path';
 const fs = Promise.promisifyAll(require('fs')); // eslint-disable-line import/no-commonjs
 
 export default function writeFile(globalRef, pattern, file) {
-    const {info, debug, compilation, fileDependencies, written, copyUnmodified} = globalRef;
+    const {info, debug, compilation, fileDependencies, written, copyUnmodified, manifest} = globalRef;
 
     return fs.statAsync(file.absoluteFrom)
     .then((stat) => {
@@ -81,6 +81,7 @@ export default function writeFile(globalRef, pattern, file) {
             }
 
             info(`writing '${file.webpackTo}' to compilation assets from '${file.absoluteFrom}'`);
+            manifest[file.relativeFrom] = file.webpackTo;
             compilation.assets[file.webpackTo] = {
                 size: function() {
                     return stat.size;

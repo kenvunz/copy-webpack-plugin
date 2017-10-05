@@ -64,6 +64,7 @@ function CopyWebpackPlugin(patterns = [], options = {}) {
                 written,
                 fileDependencies,
                 contextDependencies,
+                manifest: options.manifest || {},
                 context: compiler.options.context,
                 output: compiler.options.output.path,
                 ignore: options.ignore || [],

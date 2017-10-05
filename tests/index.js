@@ -1187,5 +1187,36 @@ describe('apply function', () => {
                 .catch(done);
             });
         });
+
+        describe('manifest', () => {
+            it.only('can store processed files in a `manfiest` object', (done) => {
+                let manifest = {};
+
+                runEmit({
+                    expectedAssetKeys: [
+                        'nested/.dottedfile-79d39f',
+                        'nested/directoryfile-22af64.txt',
+                        'nested/nested/nestedfile-d41d8c.txt'
+                    ],
+                    patterns: [{
+                        from: 'directory',
+                        to: 'nested/[path][name]-[hash:6].[ext]'
+                    }],
+                    options: {
+                        manifest
+                    }
+                })
+                .then(() => {
+                    const keys = Object.keys(manifest);
+                    expect(keys).to.deep.equal([
+                        '/dottedfile',
+                        '/directoryfile.txt',
+                        'nested/nestedfile.txt'
+                    ]);
+                })
+                .then(done)
+                .catch(done);
+            });
+        });
     });
 });
