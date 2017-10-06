@@ -4,3 +4,4 @@ compiled_tests
 coverage
 .*
 *.log
+yarn.lock
